@@ -1,0 +1,71 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// 用户表: 用于登录与交易鉴权
+model user {
+  id        String   @id @default(cuid())
+  /// 用户名
+  username  String   @unique
+  /// 密码
+  password  String
+  /// 昵称
+  nickname  String?
+  /// 头像
+  avatar    String?
+  /// 创建时间
+  createdAt DateTime @default(now())
+  /// 更新时间
+  updatedAt DateTime @updatedAt
+
+  news_report_to_user news_report_to_user[]
+}
+
+// 新闻报告表: 核心业务展示数据
+model news_report {
+  id          String   @id @default(cuid())
+  /// 新闻标题
+  title       String   @db.VarChar(255)
+  /// 新闻正文
+  content     String?  @db.LongText
+  /// 原文链接
+  sourceUrl   String?  @db.Text
+  /// 新闻归属于的标签列表
+  tags        Json?
+  /// 新闻中携带的图片列表
+  images      Json?
+  /// AI 总结后的短文
+  summary     String?  @db.Text
+  /// AI 总结后的观点列表
+  viewpoints  Json?
+  /// AI 情绪评分
+  score       Float?
+  /// 新闻发布时间
+  publishTime DateTime
+  /// 创建时间
+  createdAt   DateTime @default(now())
+  /// 更新时间
+  updatedAt   DateTime @updatedAt
+
+  news_report_to_user news_report_to_user[]
+}
+
+// 显式中间表: 用户收藏/关注的新闻
+model news_report_to_user {
+  id     String @id @default(cuid())
+  userId String
+  newsId String
+
+  user        user        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  news_report news_report @relation(fields: [newsId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now()) // 收藏时间
+
+  @@unique([userId, newsId]) // 确保一个用户对一篇新闻只能收藏一次
+  @@map("news_report_to_user")
+}

@@ -1,0 +1,45 @@
+version: "3"
+
+networks:
+  market_insights_network:
+    driver: bridge
+
+services:
+  mysql:
+    image: mysql:latest
+    container_name: market_insights_mysql
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+    ports:
+      - ${MYSQLDB_LOCAL_PORT}:${MYSQLDB_DOCKER_PORT}
+    volumes:
+      - ./docker/mysql/data:/var/lib/mysql:rw
+      - ./docker/mysql/init:/docker-entrypoint-initdb.d
+      - ./docker/mysql/init:/etc/mysql/conf.d:ro
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - market_insights_network
+
+  redis:
+    image: redis:latest
+    container_name: market_insights_redis
+    restart: always
+    env_file: .env
+    environment:
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+    ports:
+      - ${REDIS_LOCAL_PORT}:${REDIS_DOCKER_PORT}
+    volumes:
+      - ./docker/redis/data:/data
+      - ./docker/redis/config:/opt/config
+    command: redis-server /opt/config/redis.conf
+    networks:
+      - market_insights_network
