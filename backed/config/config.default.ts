@@ -7,6 +7,19 @@ export default (appInfo: EggAppInfo) => {
   // use for cookie sign key, should change to your own and keep security
   config.keys = appInfo.name + '_1770823340131_6860';
 
+  // CORS 配置
+  config.cors = {
+    origin: '*',
+    allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS'
+  };
+
+  // CSRF 配置（开发环境禁用）
+  config.security = {
+    csrf: {
+      enable: false
+    }
+  };
+
   // add your egg config in here
   config.middleware = [];
 

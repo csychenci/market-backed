@@ -1,5 +1,3 @@
-version: "3"
-
 networks:
   market_insights_network:
     driver: bridge
