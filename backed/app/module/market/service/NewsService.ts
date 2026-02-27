@@ -8,6 +8,15 @@ export class NewsService {
   @Inject()
   private prismaService: PrismaService
 
+  async getTags() {
+    const result = await this.prismaService.client.news_report_tags.findMany()
+    return {
+      code: 200,
+      data: result,
+      msg: "操作成功"
+    }
+  }
+
   async listNews(pageNum: number = 1, pageSize: number = 10) {
     const skip = (pageNum - 1) * pageSize
     const [list, total] = await Promise.all([
