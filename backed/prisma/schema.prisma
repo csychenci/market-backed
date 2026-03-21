@@ -69,3 +69,14 @@ model news_report_to_user {
   @@unique([userId, newsId]) // 确保一个用户对一篇新闻只能收藏一次
   @@map("news_report_to_user")
 }
+
+model news_report_tags {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  /// 创建时间
+  createdAt DateTime @default(now())
+  /// 更新时间
+  updatedAt DateTime @updatedAt
+
+  @@map("news_report_tags")
+}

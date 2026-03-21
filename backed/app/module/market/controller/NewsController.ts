@@ -8,6 +8,15 @@ export class NewsController {
   @Inject()
   private newsService: NewsService
 
+
+  @HTTPMethod({
+    method: HTTPMethodEnum.GET,
+    path: "/tags"
+  })
+  async getTags() {
+    return await this.newsService.getTags()
+  }
+
   @HTTPMethod({
     method: HTTPMethodEnum.GET,
     path: "/"
