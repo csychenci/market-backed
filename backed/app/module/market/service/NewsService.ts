@@ -8,6 +8,11 @@ export class NewsService {
   @Inject()
   private prismaService: PrismaService
 
+  private formatNews(item: any) {
+    const { createdAt, updatedAt, ...rest } = item
+    return { ...rest, createAt: createdAt, updateAt: updatedAt }
+  }
+
   async listNews(pageNum: number = 1, pageSize: number = 10) {
     const skip = (pageNum - 1) * pageSize
     const [list, total] = await Promise.all([
@@ -24,7 +29,7 @@ export class NewsService {
     return {
       code: 200,
       data: {
-        list,
+        list: list.map(item => this.formatNews(item)),
         total
       },
       msg: "操作成功"
@@ -39,7 +44,7 @@ export class NewsService {
     })
     return {
       code: 200,
-      data: result,
+      data: result ? this.formatNews(result) : null,
       msg: "操作成功"
     }
   }
@@ -80,7 +85,7 @@ export class NewsService {
       })
       return {
         code: 200,
-        data: result,
+        data: this.formatNews(result),
         msg: "创建成功"
       }
     } catch (error) {
