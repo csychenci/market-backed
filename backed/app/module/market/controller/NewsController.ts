@@ -8,15 +8,6 @@ export class NewsController {
   @Inject()
   private newsService: NewsService
 
-
-  @HTTPMethod({
-    method: HTTPMethodEnum.GET,
-    path: "/tags"
-  })
-  async getTags() {
-    return await this.newsService.getTags()
-  }
-
   @HTTPMethod({
     method: HTTPMethodEnum.GET,
     path: "/"
@@ -33,26 +24,5 @@ export class NewsController {
   })
   async details(@HTTPParam({name: "id"}) id: string) {
     return await this.newsService.getDetailsById(id)
-  }
-
-  @HTTPMethod({
-    method: HTTPMethodEnum.POST,
-    path: '/',
-  })
-  async create(@HTTPBody() body: {
-    title: string
-    content?: string
-    sourceUrl?: string
-    tags?: unknown
-    images?: unknown
-    summary?: string
-    viewpoints?: unknown
-    score?: number
-    publishTime: string
-  }) {
-    return await this.newsService.createNews({
-      ...body,
-      publishTime: new Date(body.publishTime)
-    })
   }
 }
