@@ -1,5 +1,5 @@
+import { PrismaService } from "@/module/common";
 import { AccessLevel, Inject, SingletonProto } from "@eggjs/tegg";
-import { PrismaService } from "./PrismaService";
 
 @SingletonProto({
   accessLevel: AccessLevel.PUBLIC

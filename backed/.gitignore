@@ -20,3 +20,6 @@ test/**/*.map
 config/**/*.map
 package-lock.json
 .package-lock.json
+app/middleware/response.ts
+app/module/user/controller/user.ts
+app/module/user/service/user.ts

@@ -20,8 +20,16 @@ export default (appInfo: EggAppInfo) => {
     }
   };
 
-  // add your egg config in here
-  config.middleware = [];
+  config.middleware = [ 'response', 'auth' ];
+
+  // 配置全局 auth 中间件白名单（不需要登录即可访问的路由）
+  config.auth = {
+    ignore: [
+      '/api/user/login',
+      '/api/user/register',
+      // 可以在这里继续添加无需鉴权的公开接口，例如 '/api/public/xxx'
+    ],
+  };
 
   // change multipart mode to file
   // @see https://github.com/eggjs/multipart/blob/master/src/config/config.default.ts#L104

@@ -1,0 +1,1 @@
+{"name": "common","unitPath": "/Users/azuuuuuu/Desktop/project/market-insights/backed/app/module/common","clazzList": [{"name": "RedisService","filePath": "service/RedisService.ts"},{"name": "JwtService","filePath": "service/JwtService.ts"},{"name": "PrismaService","filePath": "service/PrismaService.ts"}],"multiInstanceClazzList": [],"protos": []}

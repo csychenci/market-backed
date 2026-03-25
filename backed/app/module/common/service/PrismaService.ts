@@ -1,5 +1,5 @@
-import { AccessLevel, SingletonProto } from "@eggjs/tegg";
-import { Prisma, PrismaClient } from "@prisma/client";
+import { AccessLevel, SingletonProto } from '@eggjs/tegg';
+import { Prisma, PrismaClient } from '@prisma/client';
 export { Prisma, PrismaClient };
 
 @SingletonProto({

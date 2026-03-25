@@ -37,7 +37,7 @@ export class NewsController {
 
   @HTTPMethod({
     method: HTTPMethodEnum.POST,
-    path: "/"
+    path: '/',
   })
   async create(@HTTPBody() body: {
     title: string

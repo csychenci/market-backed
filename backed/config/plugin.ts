@@ -29,6 +29,14 @@ const plugin: EggPlugin = {
     enable: true,
     package: '@eggjs/tracer',
   },
+  eggJwt: {
+    enable: true,
+    package: 'egg-jwt',
+  },
+  eggRedis: {
+    enable: true,
+    package: 'egg-redis',
+  },
 };
 
 export default plugin;
