@@ -10,7 +10,8 @@
     "declaration": false,
     "strict": false,
     "paths": {
-      "@/module/*": ["app/module/*"]
+      "@/module/*": ["app/module/*"],
+      "@/decorators/*": ["app/decorators/*"]
     },
     "baseUrl": "."
   }

@@ -18,8 +18,39 @@ function getRedis(): Redis {
   return redisClient;
 }
 
+// 不需要登录的公开路由规则
+const PUBLIC_ROUTES = [
+  { method: 'GET', path: '/api/news' },      // 新闻列表
+  { method: 'GET', path: '/api/news/' },     // 新闻列表（带斜杠）
+  { method: 'GET', path: '/api/news/:id' },  // 新闻详情
+  { method: 'POST', path: '/api/user/login' },
+  { method: 'POST', path: '/api/user/register' },
+];
+
+function isPublicRoute(method: string, path: string): boolean {
+  return PUBLIC_ROUTES.some(route => {
+    if (route.method !== method) return false;
+    // 精确匹配 /api/news，排除 /api/news/:id 等子路由
+    if (route.path === '/api/news' || route.path === '/api/news/') {
+      return path === '/api/news' || path.startsWith('/api/news?');
+    }
+    // 匹配 /api/news/:id 详情接口
+    if (route.path === '/api/news/:id') {
+      const idPattern = /^\/api\/news\/[^/?]+$/;
+      return idPattern.test(path);
+    }
+    return route.path === path;
+  });
+}
+
 export default function authMiddleware(): any {
   return async (ctx: Context, next: () => Promise<any>) => {
+    // 检查是否为公开路由
+    if (isPublicRoute(ctx.method, ctx.path)) {
+      await next();
+      return;
+    }
+
     // 1. 获取 token
     let token = ctx.request.header.authorization as string;
     if (token && token.startsWith('Bearer ')) {

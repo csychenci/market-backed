@@ -1,1 +1,2 @@
-export * from "./service/user";
+export * from './service/UserService';
+export * from './controller/UserController';

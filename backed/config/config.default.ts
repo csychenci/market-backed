@@ -27,7 +27,9 @@ export default (appInfo: EggAppInfo) => {
     ignore: [
       '/api/user/login',
       '/api/user/register',
-      // 可以在这里继续添加无需鉴权的公开接口，例如 '/api/public/xxx'
+      // 新闻列表需要精确匹配，排除收藏等需要登录的接口
+      // GET /api/news?pageNum=1 这种请求会被忽略
+      // POST /api/news/:id/favorite 需要登录
     ],
   };
 

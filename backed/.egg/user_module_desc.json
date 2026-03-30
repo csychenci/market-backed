@@ -1,1 +1,1 @@
-{"name": "user","unitPath": "/Users/azuuuuuu/Desktop/project/market-insights/backed/app/module/user","clazzList": [{"name": "UserService","filePath": "service/user.ts"},{"name": "UserController","filePath": "controller/user.ts"}],"multiInstanceClazzList": [],"protos": []}
+{"name": "user","unitPath": "/Users/zhuli/Desktop/market/market-backed/backed/app/module/user","clazzList": [{"name": "UserService","filePath": "service/UserService.ts"},{"name": "UserController","filePath": "controller/UserController.ts"}],"multiInstanceClazzList": [],"protos": []}
